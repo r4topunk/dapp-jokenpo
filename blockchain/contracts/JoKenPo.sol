@@ -2,9 +2,10 @@
 pragma solidity ^0.8.20;
 
 import "./IJoKenPo.sol";
+import "./JKPLibrary.sol";
 
 contract JoKenPo is IJoKenPo {
-    Options private choice1 = Options.NONE;
+    JKPLibrary.Options private choice1 = JKPLibrary.Options.NONE;
     address private player1;
     string private result = "";
     uint256 private bid = 0.01 ether;
@@ -12,7 +13,7 @@ contract JoKenPo is IJoKenPo {
 
     address payable private immutable owner;
 
-    Player[] public players;
+    JKPLibrary.Player[] public players;
 
     constructor() {
         owner = payable(msg.sender);
@@ -56,7 +57,7 @@ contract JoKenPo is IJoKenPo {
             }
         }
 
-        players.push(Player(winner, 1));
+        players.push(JKPLibrary.Player(winner, 1));
     }
 
     function finishGame(string memory newResult, address winner) private {
@@ -70,7 +71,7 @@ contract JoKenPo is IJoKenPo {
 
         result = newResult;
         player1 = address(0);
-        choice1 = Options.NONE;
+        choice1 = JKPLibrary.Options.NONE;
     }
 
     function getBalance() external view returns (uint) {
@@ -78,45 +79,63 @@ contract JoKenPo is IJoKenPo {
         return address(this).balance;
     }
 
-    function play(Options newChoice) external payable {
+    function play(JKPLibrary.Options newChoice) external payable {
         require(msg.sender != owner, "The owner cannot play");
-        require(newChoice != Options.NONE, "Invalid choice");
+        require(newChoice != JKPLibrary.Options.NONE, "Invalid choice");
         require(player1 != msg.sender, "Wait the another player");
         require(msg.value >= bid, "Invalid bid");
 
-        if (choice1 == Options.NONE) {
+        if (choice1 == JKPLibrary.Options.NONE) {
             player1 = msg.sender;
             choice1 = newChoice;
             result = "Player 1 choose his/her option. Waiting player 2";
-        } else if (choice1 == Options.ROCK && newChoice == Options.SCISSORS)
-            finishGame("Rock breaks scissors. Player 1 won", player1);
-        else if (choice1 == Options.PAPER && newChoice == Options.ROCK)
-            finishGame("Paper wraps rock. Player 1 won", player1);
-        else if (choice1 == Options.SCISSORS && newChoice == Options.PAPER)
-            finishGame("Scissors cuts paper. Player 1 won", player1);
-        else if (choice1 == Options.SCISSORS && newChoice == Options.ROCK)
-            finishGame("Rock breaks scissors. Player 2 won", msg.sender);
-        else if (choice1 == Options.ROCK && newChoice == Options.PAPER)
-            finishGame("Paper wraps rock. Player 2 won", msg.sender);
-        else if (choice1 == Options.PAPER && newChoice == Options.SCISSORS)
-            finishGame("Scissors cuts paper. Player 2 won", msg.sender);
+        } else if (
+            choice1 == JKPLibrary.Options.ROCK &&
+            newChoice == JKPLibrary.Options.SCISSORS
+        ) finishGame("Rock breaks scissors. Player 1 won", player1);
+        else if (
+            choice1 == JKPLibrary.Options.PAPER &&
+            newChoice == JKPLibrary.Options.ROCK
+        ) finishGame("Paper wraps rock. Player 1 won", player1);
+        else if (
+            choice1 == JKPLibrary.Options.SCISSORS &&
+            newChoice == JKPLibrary.Options.PAPER
+        ) finishGame("Scissors cuts paper. Player 1 won", player1);
+        else if (
+            choice1 == JKPLibrary.Options.SCISSORS &&
+            newChoice == JKPLibrary.Options.ROCK
+        ) finishGame("Rock breaks scissors. Player 2 won", msg.sender);
+        else if (
+            choice1 == JKPLibrary.Options.ROCK &&
+            newChoice == JKPLibrary.Options.PAPER
+        ) finishGame("Paper wraps rock. Player 2 won", msg.sender);
+        else if (
+            choice1 == JKPLibrary.Options.PAPER &&
+            newChoice == JKPLibrary.Options.SCISSORS
+        ) finishGame("Scissors cuts paper. Player 2 won", msg.sender);
         else {
             result = "Draw game. The prize was doubled";
             player1 = address(0);
-            choice1 = Options.NONE;
+            choice1 = JKPLibrary.Options.NONE;
         }
     }
 
-    function getLeaderboard() external view returns (Player[] memory) {
+    function getLeaderboard()
+        external
+        view
+        returns (JKPLibrary.Player[] memory)
+    {
         if (players.length <= 1) return players;
 
-        Player[] memory arr = new Player[](players.length);
+        JKPLibrary.Player[] memory arr = new JKPLibrary.Player[](
+            players.length
+        );
         for (uint i = 0; i < players.length; i++) arr[i] = players[i];
 
         for (uint i = 0; i < arr.length - 1; i++) {
             for (uint j = 1; j < arr.length; j++) {
                 if (arr[i].wins < arr[j].wins) {
-                    Player memory change = arr[i];
+                    JKPLibrary.Player memory change = arr[i];
                     arr[i] = arr[j];
                     arr[j] = change;
                 }
