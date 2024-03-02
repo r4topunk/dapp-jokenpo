@@ -8,11 +8,11 @@ interface IJoKenPo {
 
     function getBid() external view returns (uint256);
 
-    function getComission() external view returns (uint8);
+    function getCommission() external view returns (uint8);
 
     function setBid(uint256 _bid) external;
 
-    function setComission(uint8 _comission) external;
+    function setCommission(uint8 _commission) external;
 
     function getBalance() external view returns (uint);
 

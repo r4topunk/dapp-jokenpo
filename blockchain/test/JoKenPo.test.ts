@@ -82,33 +82,33 @@ describe("JoKenPo Tests", function () {
   })
 
   describe("Commision", () => {
-    it("Should set comission", async function () {
+    it("Should set commission", async function () {
       const { jokenpo, owner, player1, player2 } = await loadFixture(
         deployFixture
       )
 
-      const newComission = 11n
+      const newCommission = 11n
 
-      await jokenpo.setComission(newComission)
-      const updatedComission = await jokenpo.getComission()
+      await jokenpo.setCommission(newCommission)
+      const updatedCommission = await jokenpo.getCommission()
 
-      expect(updatedComission).to.equal(newComission)
+      expect(updatedCommission).to.equal(newCommission)
     })
 
-    it("Should NOT set comission (permission)", async function () {
+    it("Should NOT set commission (permission)", async function () {
       const { jokenpo, owner, player1, player2 } = await loadFixture(
         deployFixture
       )
 
       const instace = jokenpo.connect(player1)
-      const newComission = 11n
+      const newCommission = 11n
 
-      await expect(instace.setComission(newComission)).to.be.revertedWith(
+      await expect(instace.setCommission(newCommission)).to.be.revertedWith(
         "You do not have permission"
       )
     })
 
-    it("Should NOT set comission (game in progress)", async function () {
+    it("Should NOT set commission (game in progress)", async function () {
       const { jokenpo, owner, player1, player2 } = await loadFixture(
         deployFixture
       )
@@ -116,10 +116,10 @@ describe("JoKenPo Tests", function () {
       const instace = jokenpo.connect(player1)
       await instace.play(Options.PAPER, { value: DEFAULT_BID })
 
-      const newComission = 11n
+      const newCommission = 11n
 
-      await expect(jokenpo.setComission(newComission)).to.be.revertedWith(
-        "You cannot change the comission with a game in progress"
+      await expect(jokenpo.setCommission(newCommission)).to.be.revertedWith(
+        "You cannot change the commission with a game in progress"
       )
     })
   })

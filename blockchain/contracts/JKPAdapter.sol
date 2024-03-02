@@ -23,16 +23,16 @@ contract JKPAdapter {
         return joKenPo.getBid();
     }
 
-    function getComission() external view upgraded returns (uint8) {
-        return joKenPo.getComission();
+    function getCommission() external view upgraded returns (uint8) {
+        return joKenPo.getCommission();
     }
 
     function setBid(uint256 _bid) external restricted upgraded {
         return joKenPo.setBid(_bid);
     }
 
-    function setComission(uint8 _comission) external restricted upgraded {
-        return joKenPo.setComission(_comission);
+    function setCommission(uint8 _commission) external restricted upgraded {
+        return joKenPo.setCommission(_commission);
     }
 
     function getBalance() external view upgraded returns (uint) {

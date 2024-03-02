@@ -9,7 +9,7 @@ contract JoKenPo is IJoKenPo {
     address private player1;
     string private result = "";
     uint256 private bid = 0.01 ether;
-    uint8 private comission = 10; // percent
+    uint8 private commission = 10; // percent
 
     address payable private immutable owner;
 
@@ -27,8 +27,8 @@ contract JoKenPo is IJoKenPo {
         return bid;
     }
 
-    function getComission() external view returns (uint8) {
-        return comission;
+    function getCommission() external view returns (uint8) {
+        return commission;
     }
 
     function setBid(uint256 _bid) external {
@@ -40,13 +40,13 @@ contract JoKenPo is IJoKenPo {
         bid = _bid;
     }
 
-    function setComission(uint8 _comission) external {
+    function setCommission(uint8 _commission) external {
         require(tx.origin == owner, "You do not have permission");
         require(
             player1 == address(0),
-            "You cannot change the comission with a game in progress"
+            "You cannot change the commission with a game in progress"
         );
-        comission = _comission;
+        commission = _commission;
     }
 
     function updateWinner(address winner) private {
@@ -63,7 +63,7 @@ contract JoKenPo is IJoKenPo {
     function finishGame(string memory newResult, address winner) private {
         address contractAddress = address(this);
         payable(winner).transfer(
-            (contractAddress.balance / 100) * (100 - comission)
+            (contractAddress.balance / 100) * (100 - commission)
         );
         owner.transfer(contractAddress.balance);
 

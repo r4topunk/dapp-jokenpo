@@ -60,7 +60,7 @@ describe("JoKenPo Adapter Tests", function () {
     )
   })
 
-  it("Should get comission", async function () {
+  it("Should get commission", async function () {
     const { jokenpo, jkpAdapter, owner, player1, player2 } = await loadFixture(
       deployFixture
     )
@@ -68,8 +68,8 @@ describe("JoKenPo Adapter Tests", function () {
     const address = await jokenpo.getAddress()
     await jkpAdapter.upgrade(address)
 
-    const comission = await jkpAdapter.getComission()
-    expect(comission).to.equal(DEFAULT_COMMISSION)
+    const commission = await jkpAdapter.getCommission()
+    expect(commission).to.equal(DEFAULT_COMMISSION)
   })
 
   it("Should NOT get commission (upgraded) ", async function () {
@@ -78,7 +78,7 @@ describe("JoKenPo Adapter Tests", function () {
     )
 
     const address = await jokenpo.getAddress()
-    await expect(jkpAdapter.getComission()).to.be.revertedWith(
+    await expect(jkpAdapter.getCommission()).to.be.revertedWith(
       "You must upgrade first"
     )
   })
