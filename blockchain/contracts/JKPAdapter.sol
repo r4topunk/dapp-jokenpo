@@ -11,7 +11,7 @@ contract JKPAdapter {
         owner = msg.sender;
     }
 
-    function getAddress() external view returns (address) {
+    function getContractAddress() external view returns (address) {
         return address(joKenPo);
     }
 
@@ -19,23 +19,23 @@ contract JKPAdapter {
         return joKenPo.getResult();
     }
 
-    function getBid() external view returns (uint256) {
+    function getBid() external view upgraded returns (uint256) {
         return joKenPo.getBid();
     }
 
-    function getComission() external view returns (uint8) {
+    function getComission() external view upgraded returns (uint8) {
         return joKenPo.getComission();
     }
 
-    function setBid(uint256 _bid) external restricted {
+    function setBid(uint256 _bid) external restricted upgraded {
         return joKenPo.setBid(_bid);
     }
 
-    function setComission(uint8 _comission) external restricted {
+    function setComission(uint8 _comission) external restricted upgraded {
         return joKenPo.setComission(_comission);
     }
 
-    function getBalance() external view returns (uint) {
+    function getBalance() external view upgraded returns (uint) {
         return joKenPo.getBalance();
     }
 
@@ -46,6 +46,7 @@ contract JKPAdapter {
     function getLeaderboard()
         external
         view
+        upgraded
         returns (JKPLibrary.Player[] memory)
     {
         return joKenPo.getLeaderboard();
