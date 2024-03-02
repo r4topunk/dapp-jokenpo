@@ -11,9 +11,58 @@ contract JKPAdapter {
         owner = msg.sender;
     }
 
-    function upgrade(address _contract) external {
-        require(msg.sender == owner, "You do not have permission");
+    function getAddress() external view returns (address) {
+        return address(joKenPo);
+    }
+
+    function getResult() external view returns (string memory) {
+        return joKenPo.getResult();
+    }
+
+    function getBid() external view returns (uint256) {
+        return joKenPo.getBid();
+    }
+
+    function getComission() external view returns (uint8) {
+        return joKenPo.getComission();
+    }
+
+    function setBid(uint256 _bid) external restricted {
+        return joKenPo.setBid(_bid);
+    }
+
+    function setComission(uint8 _comission) external restricted {
+        return joKenPo.setComission(_comission);
+    }
+
+    function getBalance() external view returns (uint) {
+        return joKenPo.getBalance();
+    }
+
+    function play(JKPLibrary.Options newChoice) external payable {
+        return joKenPo.play{value: msg.value}(newChoice);
+    }
+
+    function getLeaderboard()
+        external
+        view
+        returns (JKPLibrary.Player[] memory)
+    {
+        return joKenPo.getLeaderboard();
+    }
+
+    function upgrade(address _contract) external restricted {
         require(_contract != address(0), "Empty address is not permitted");
         joKenPo = IJoKenPo(_contract);
+    }
+
+    modifier upgraded() {
+        require(address(joKenPo) != address(0), "You must upgrade first");
+        _;
+    }
+
+    modifier restricted() {
+        require(msg.sender == owner, "You do not have permission");
+        _;
     }
 }
