@@ -107,7 +107,7 @@ contract JoKenPo {
     }
 
     function getLeaderboard() external view returns(Player[] memory){
-        if(players.length < 2) return players;
+        if(players.length <= 1) return players;
 
         Player[] memory arr = new Player[](players.length);
         for(uint i=0; i < players.length; i++)
