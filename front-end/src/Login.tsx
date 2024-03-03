@@ -12,7 +12,7 @@ function Login() {
   useEffect(() => {
     if (localStorage.getItem("account") !== null)
       redirectAfterLogin(localStorage.getItem("isAdmin") === "true")
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function redirectAfterLogin(isAdmin: boolean) {
