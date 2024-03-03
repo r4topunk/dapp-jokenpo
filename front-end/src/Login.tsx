@@ -1,10 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { doLogin } from "./Web3Service"
 
 function Login() {
   const [message, setMessage] = useState("")
+
+  useEffect(() => {
+    if (localStorage.getItem("account") !== null) alert("Já autenticado")
+  }, [])
 
   function onBtnClick() {
     setMessage("Loggin in...")
@@ -12,6 +16,7 @@ function Login() {
       .then((result) => alert(JSON.stringify(result)))
       .catch((err) => console.error(err))
   }
+
   return (
     <div className="cover-container d-flex h-100 p-3 mx-auto flex-column">
       <header className="mb-auto">
