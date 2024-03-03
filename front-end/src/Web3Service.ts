@@ -100,3 +100,20 @@ export async function setBid(newBid: string) {
   const tx = await contract.methods.setBid(newBid).send()
   return tx.transactionHash
 }
+
+export type Player = {
+  wallet: string
+  wins: number
+}
+
+export type Leaderboard = {
+  players?: Player[]
+  result?: string
+}
+
+export enum Options {
+  NONE = 0,
+  ROCK = 1,
+  PAPER = 2,
+  SCISSORS = 3,
+}
