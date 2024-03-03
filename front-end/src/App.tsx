@@ -3,8 +3,9 @@ import { Header } from "./Header"
 import {
   Leaderboard,
   Options,
+  getBestPlayers,
   getLeaderboard,
-  getResult,
+  listenEvent,
   play,
 } from "./Web3Service"
 
@@ -16,14 +17,17 @@ function App() {
     getLeaderboard()
       .then((leaderboard) => setLeaderboard(leaderboard))
       .catch((err) => setMessage(err.message))
-  })
+
+    listenEvent((result: string) =>
+      getBestPlayers()
+        .then((players) => setLeaderboard({ players, result } as Leaderboard))
+        .catch((err) => setMessage(err.message))
+    )
+  }, [])
 
   function onPlay(option: Options) {
     setLeaderboard({ ...leaderboard, result: "Sending your choice..." })
-    play(option)
-      .then((tx) => getResult())
-      .then((result) => setLeaderboard({ ...leaderboard, result }))
-      .catch((err) => setMessage(err.message))
+    play(option).catch((err) => setMessage(err.message))
   }
 
   return (

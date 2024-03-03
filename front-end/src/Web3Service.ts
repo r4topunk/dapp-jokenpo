@@ -2,7 +2,7 @@ import Web3, { Contract } from "web3"
 import { AbiType } from "./AbiType"
 import ABI from "./abi.json"
 
-const ADAPTER_ADDRESS = `${process.env.REACT_APP_CONTRACT_ADDRESS}`
+const ADAPTER_ADDRESS = `${process.env.REACT_APP_CONTRACT}`
 const LS_KEY_ACCOUNT = "account"
 const LS_KEY_IS_ADMIN = "isAdmin"
 
@@ -140,4 +140,13 @@ export async function getLeaderboard(): Promise<Leaderboard> {
 export async function getBestPlayers(): Promise<Player[]> {
   const contract = getContract()
   return contract.methods.getLeaderboard().call()
+}
+
+export async function listenEvent(callback: Function) {
+  const web3 = new Web3(`${process.env.REACT_APP_WEBSOCKET_SERVER}`)
+  const contract = getContract(web3)
+
+  contract.events
+    .Played({ fromBlock: "latest" })
+    .on("data", (event: any) => callback(event.returnValues.result))
 }

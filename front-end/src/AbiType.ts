@@ -5,6 +5,25 @@ export type AbiType = [
     type: "constructor"
   },
   {
+    anonymous: false
+    inputs: [
+      {
+        indexed: true
+        internalType: "address"
+        name: "player"
+        type: "address"
+      },
+      {
+        indexed: false
+        internalType: "string"
+        name: "result"
+        type: "string"
+      },
+    ]
+    name: "Played"
+    type: "event"
+  },
+  {
     inputs: []
     name: "getBalance"
     outputs: [
