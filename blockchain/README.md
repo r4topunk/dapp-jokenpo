@@ -14,5 +14,5 @@ npx hardhat run scripts/deploy.ts
 
 ## Contract
 
-Implementation deployed at 0xA1E2A3c421A5a495a5410e3303175964d99F84a5
-Adapter deployed at 0x20D8025671184dbA6bd195ac092e2b289528B8a1
+Implementation deployed at 0x6e4B7C38c280f96f0781fdc327E8f9A0c1790dAa
+Adapter deployed at 0x5513B3bE0f193B527750238724B134009D423bc0
