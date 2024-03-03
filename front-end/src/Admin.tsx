@@ -80,7 +80,7 @@ function Admin() {
                   type="number"
                   className="form-control"
                   id="bid"
-                  value={dashboard?.bid || ""}
+                  value={dashboard?.bid?.toString() || ""}
                   onChange={onInputChange}
                 />
                 <span className="input-group-text bg-secondary">wei</span>
@@ -102,7 +102,7 @@ function Admin() {
                   type="number"
                   className="form-control"
                   id="commission"
-                  value={dashboard?.commission || ""}
+                  value={dashboard?.commission?.toString() || ""}
                   onChange={onInputChange}
                 />
                 <span className="input-group-text bg-secondary">%</span>
