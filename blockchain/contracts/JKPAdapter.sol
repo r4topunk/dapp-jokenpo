@@ -40,7 +40,7 @@ contract JKPAdapter {
     }
 
     function play(JKPLibrary.Options newChoice) external payable {
-        return joKenPo.play{value: msg.value}(newChoice);
+        string memory result = joKenPo.play{value: msg.value}(newChoice);
     }
 
     function getLeaderboard()
